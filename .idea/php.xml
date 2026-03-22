@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MessDetectorOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PHPCSFixerOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PHPCodeSnifferOptionsConfiguration">
+    <option name="highlightLevel" value="WARNING" />
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/symfony/type-info" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/doctrine/persistence" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/doctrine/deprecations" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/doctrine/migrations" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/doctrine/annotations" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/doctrine/collections" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/doctrine/orm" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/doctrine/data-fixtures" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/fakerphp/faker" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/hamcrest/hamcrest-php" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nettrine/cache" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nettrine/migrations" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nettrine/fixtures" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nettrine/annotations" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nettrine/dbal" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nettrine/orm" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/setasign/fpdi" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/slevomat/coding-standard" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/squizlabs/php_codesniffer" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/contributte/tester" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/contributte/cache" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/contributte/mailing" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/contributte/qa" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/contributte/security" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/contributte/di" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/contributte/event-dispatcher-extra" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/contributte/application" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/contributte/latte" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/contributte/console-extra" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/contributte/forms" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/contributte/console" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/contributte/http" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/contributte/phpstan" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/contributte/pdf" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/contributte/event-dispatcher" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/contributte/bootstrap" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/contributte/dev" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/contributte/monolog" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/contributte/mail" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/contributte/utils" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/contributte/tracy" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/dealerdirect/phpcodesniffer-composer-installer" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/composer" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/psr/event-dispatcher" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/mpdf/psr-http-message-shim" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/mpdf/mpdf" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/mpdf/psr-log-aware-trait" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/latte/latte" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nette/tester" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nette/robot-loader" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nette/php-generator" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nette/component-model" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nette/neon" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nette/security" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nette/di" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nette/application" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nette/forms" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nette/caching" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nette/schema" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nette/http" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nette/bootstrap" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nette/mail" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nette/utils" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nette/routing" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/tracy/tracy" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nelmio/alice" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/mockery/mockery" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/phpstan/phpstan-doctrine" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/phpstan/phpstan-strict-rules" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/phpstan/phpdoc-parser" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/phpstan/phpstan" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/phpstan/phpstan-deprecation-rules" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/phpstan/phpstan-nette" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/symfony/cache" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/symfony/polyfill-php84" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/symfony/var-exporter" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/symfony/cache-contracts" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/symfony/property-access" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/symfony/property-info" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/symfony/stopwatch" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/symfony/thanks" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/phpstan/extension-installer" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nette/phpstan-rules" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nette/database" />
+      <path value="$PROJECT_DIR$/webapp-skeleton/vendor/nette/assets" />
+    </include_path>
+  </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.4">
+    <option name="suggestChangeDefaultLanguageLevel" value="false" />
+  </component>
+  <component name="PhpStan">
+    <PhpStan_settings>
+      <PhpStanConfiguration tool_path="$PROJECT_DIR$/webapp-skeleton/vendor/bin/phpstan" />
+    </PhpStan_settings>
+  </component>
+  <component name="PhpStanOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+  <component name="PsalmOptionsConfiguration">
+    <option name="transferred" value="true" />
+  </component>
+</project>

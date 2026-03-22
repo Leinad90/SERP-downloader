@@ -1,0 +1,13 @@
+services:
+	- App\Core\RouterFactory::createRouter
+	- App\Logic\ProcessDuckSerp(url: "https://html.duckduckgo.com/html/")
+	- GuzzleHttp\Client
+
+
+search:
+	-	in: %appDir%
+		classes:
+			- *Facade
+			- *Factory
+			- *Repository
+			- *Service
