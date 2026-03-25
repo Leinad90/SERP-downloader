@@ -4,7 +4,6 @@ namespace App\DAO;
 
 use ArrayIterator;
 use ArrayObject;
-use Couchbase\SearchResult;
 
 class SearchResults extends ArrayObject
 {

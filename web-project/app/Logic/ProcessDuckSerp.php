@@ -2,10 +2,10 @@
 
 namespace App\Logic;
 
+use App\DAO\PageInfo;
 use App\DAO\SearchResults;
 use DOMXPath;
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
 use Nette\Caching\Cache;
 use Nette\Caching\Storage;
 
@@ -37,13 +37,18 @@ class ProcessDuckSerp implements ProcessSerp
         libxml_use_internal_errors(true);
         $DOM = new \DOMDocument();
         $DOM->loadHTML($data);
-        echo $data;
-        bdump($data);
         $xpath = new DOMXPath($DOM);
-        $a = $xpath->query("//div[contains(@class,'web-result')]");
-        bdump($a);
-        $a = $xpath->query("//div");
-        bdump($a);
+        $xmlResulsts = $xpath->query("//div[contains(@class,'web-result')]");
+        foreach ($xmlResulsts as $xmlResulst) {
+            $titleXml = $xpath->query(".//h2", $xmlResulst);
+            $title = $titleXml[0]?->textContent;
+            bdump($xmlResulst->childNodes);
+            $spinnetXml = $xpath->query(".//a[@class='result__snippet']", $xmlResulst);
+            bdump($spinnetXml);
+            $spinnet = $spinnetXml[0]?->textContent;
+            $url = $spinnetXml[0]?->getAttribute("href");
+            $result[] = new PageInfo($url,$title,$spinnet);
+        }
         return $result;
     }
 

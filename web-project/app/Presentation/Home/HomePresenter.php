@@ -29,7 +29,7 @@ final class HomePresenter extends Nette\Application\UI\Presenter
     {
         $this->processSerp->query = $values->q;
         $result = $this->processSerp->process();
-        $this->terminate();
-        //$this->sendJson($result);
+        //$this->terminate();
+        $this->sendJson($result);
     }
 }
