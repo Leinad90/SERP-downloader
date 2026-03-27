@@ -1,0 +1,4 @@
+parameters:
+    applicationName: "SERP Dowsnloader"
+    version: "1.0.0"
+    author: "Daniel Hejduk"

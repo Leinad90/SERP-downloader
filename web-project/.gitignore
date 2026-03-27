@@ -1,3 +1,4 @@
 vendor
 temp
 log
+config/local.neon

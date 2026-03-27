@@ -5,7 +5,7 @@
 	"type": "project",
 	"license": ["MIT", "BSD-3-Clause", "GPL-2.0-only", "GPL-3.0-only"],
 	"require": {
-		"php": ">= 8.2",
+		"php": ">=8.4",
 		"nette/application": "^3.2.3",
 		"nette/assets": "^1.0.0",
 		"nette/bootstrap": "^3.2.6",
@@ -21,8 +21,10 @@
 		"latte/latte": "^3.1",
 		"tracy/tracy": "^2.10",
 		"php-http/discovery": "^1.20",
-		"guzzlehttp/guzzle": "^7.10"
-	},
+		"guzzlehttp/guzzle": "^7.10",
+      	"ext-libxml": "*",
+      "ext-dom": "*"
+    },
 	"require-dev": {
 		"nette/tester": "^2.5",
 		"phpstan/phpstan": "^2.1",
