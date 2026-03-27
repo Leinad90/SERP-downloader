@@ -18,7 +18,10 @@ class Downloader
         $this->webCache = new Cache($storage,'web');
     }
 
-    public function download(string $url, array $formParams = [], array $headers = []): \Stringable|string {
+    public function download(string|array $url, array $formParams = [], array $headers = []): \Stringable|string {
+        if(is_array($url)){
+            $url = $this->unparse_url($url);
+        }
         $defaultHeaders = [
             'User-Agent' => $this->userAgent,
         ];

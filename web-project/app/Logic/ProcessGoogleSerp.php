@@ -55,7 +55,7 @@ class ProcessGoogleSerp implements ProcessSerp
     }
 
 
-    function getSERP(googleRequestDao $request): string
+    protected function getSERP(googleRequestDao $request): string
     {
         $request->validate();
 
@@ -67,12 +67,20 @@ class ProcessGoogleSerp implements ProcessSerp
             $headers['Authorization'] = 'Bearer ' . $request->api_key;
         }
 
-        $url = $this->url;
+        $url = parse_url($this->url);
+
         if (!empty($params)) {
-            $url .= '?' . http_build_query($params);
+            if(!array_key_exists('query',$url)) {
+                $url['query'] = http_build_query($params);
+            } else {
+                $existingParams = [];
+                parse_str($url['query'], $existingParams);
+                $mergedParams = array_merge($existingParams, $params);
+                $url['query'] = http_build_query($mergedParams);
+            }
         }
 
-
+        bdump([$url, $params, $headers]);
         $data = $this->Downloader->download($url,$params,$headers);
         return $data;
     }

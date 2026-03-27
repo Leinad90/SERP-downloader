@@ -1,7 +1,7 @@
 services:
 	- App\Core\RouterFactory::createRouter
 #	- App\Logic\ProcessDuckSerp(url: "%duckDuckGoUrl%")
-	- App\Logic\ProcessGoogleSerp(url: "%duckDuckGoUrl%", apiKey: %gogoleApiKey%)
+	- App\Logic\ProcessGoogleSerp(url: "%googleUrl%", apiKey: %googleApiKey%)
 	- GuzzleHttp\Client
 	- App\Logic\Downloader(userAgent: "%applicationName% %version%")
 

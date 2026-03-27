@@ -2,7 +2,7 @@
 
 parameters:
     duckDuckGoUrl: "https://html.duckduckgo.com/html/"
-    googleUrl: "https://www.searchapi.io/api/v1"
+    googleUrl: "https://serpapi.com/search.json?"
 
 application:
 	errorPresenter:
