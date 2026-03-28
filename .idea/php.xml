@@ -159,6 +159,9 @@
       <path value="$PROJECT_DIR$/web-project/vendor/psr/http-factory" />
       <path value="$PROJECT_DIR$/web-project/vendor/php-http/discovery" />
       <path value="$PROJECT_DIR$/web-project/vendor/nette/caching" />
+      <path value="$PROJECT_DIR$/web-project/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/web-project/vendor/nepada/phpstan-nette-tester" />
+      <path value="$PROJECT_DIR$/web-project/vendor/phpstan/phpstan-nette" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.4">
@@ -171,6 +174,11 @@
   </component>
   <component name="PhpStanOptionsConfiguration">
     <option name="transferred" value="true" />
+  </component>
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/web-project/vendor/autoload.php" />
+    </phpunit_settings>
   </component>
   <component name="PsalmOptionsConfiguration">
     <option name="transferred" value="true" />

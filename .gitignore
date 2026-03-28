@@ -1,0 +1,4 @@
+/web-project/vendor
+/web-project/temp
+/web-project/log
+/web-project/config/local.neon
