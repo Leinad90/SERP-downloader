@@ -1,4 +1,4 @@
-vendor
-temp
-log
+/vendor
+/temp
+/log
 config/local.neon

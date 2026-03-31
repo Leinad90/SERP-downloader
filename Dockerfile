@@ -1,20 +1,19 @@
 FROM php:8.5-apache
 
 # Instalace potřebných PHP rozšíření
-RUN docker-php-ext-install pdo pdo_mysql \
-    && apt-get update && apt-get install -y \
-    git \
-    unzip \
-    && docker-php-ext-enable pdo_mysql
+RUN apt update && apt upgrade libicu-dev git zip sudo -y && docker-php-ext-configure intl && docker-php-ext-install intl
 
 # Nainstalujte Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Nastavení pracovního adresáře
 WORKDIR /var/www/html
 
-# Kopírování zdrojových souborů
-COPY . .
+# Vytvoření uživatele a nastavení oprávnění
+RUN useradd -G www-data,root -u 1000 -m composeruser
+# Změna vlastníka pracovního adresáře
+RUN chown -R composeruser:www-data /var/www/html/
+
 
 # Otevření portu
 EXPOSE 80

@@ -4,6 +4,8 @@ services:
 	- App\Logic\ProcessGoogleSerp(url: "%googleUrl%", apiKey: %googleApiKey%)
 	- GuzzleHttp\Client
 	- App\Logic\Downloader(userAgent: "%applicationName% %version%")
+	- App\Presentation\Home\HomePresenter(fileName: 'search result @query@ @date@ @time@.json')
+
 
 
 search:

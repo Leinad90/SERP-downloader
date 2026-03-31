@@ -4,6 +4,7 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/web-project/app" isTestSource="false" packagePrefix="App\" />
       <sourceFolder url="file://$MODULE_DIR$/webapp-skeleton/app" isTestSource="false" packagePrefix="App\" />
+      <sourceFolder url="file://$MODULE_DIR$/web-project/spec" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/webapp-skeleton/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/webapp-skeleton/vendor/contributte/application" />
       <excludeFolder url="file://$MODULE_DIR$/webapp-skeleton/vendor/contributte/bootstrap" />
@@ -152,8 +153,6 @@
       <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/symfony/thanks" />
       <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/tracy/tracy" />
       <excludeFolder url="file://$MODULE_DIR$/web-project/log" />
-      <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/nepada/phpstan-nette-tester" />
-      <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/nikic/php-parser" />
       <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/phpstan/phpstan-nette" />
     </content>
     <orderEntry type="inheritedJdk" />

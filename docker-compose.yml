@@ -8,3 +8,4 @@ services:
       - ./web-project/:/var/www/html/
     ports:
       - "8080:80"
+    entrypoint: ["sh", "-c", "sudo -u composeruser composer install --optimize-autoloader -n; apache2-foreground"]

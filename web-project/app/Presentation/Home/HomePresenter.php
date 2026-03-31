@@ -10,7 +10,8 @@ final class HomePresenter extends Nette\Application\UI\Presenter
 {
 
     public function __construct(
-        private ProcessSerp $processSerp,
+        private readonly ProcessSerp $processSerp,
+        private readonly string $fileName
     )
     {
         parent::__construct();
@@ -29,7 +30,10 @@ final class HomePresenter extends Nette\Application\UI\Presenter
     {
         $this->processSerp->query = $values->q;
         $result = $this->processSerp->process();
-        //$this->terminate();
+        $response= $this->getHttpResponse();
+        $fileName = str_replace(['@query@','@date@','@time@'], [$values->q,date('Y-m-d'),date('H:i:s')], $this->fileName);
+        $fileName = Nette\Utils\Strings::webalize($fileName);
+        $response->sendAsFile($fileName);
         $this->sendJson($result);
     }
 }

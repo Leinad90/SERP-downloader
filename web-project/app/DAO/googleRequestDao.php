@@ -29,6 +29,10 @@ class googleRequestDao
     /** Pokud true, použije se Authorization header místo query param api_key */
     public bool $useAuthorizationHeader = false;
 
+
+    /**
+     * @param mixed[] $data
+     */
     public function __construct(array $data = [])
     {
         foreach ($data as $k => $v) {
