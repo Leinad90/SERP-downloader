@@ -7,6 +7,7 @@ namespace App\Logic;
 use App\DAO\googleRequestDao;
 use App\DAO\PageInfo;
 use App\DAO\SearchResults;
+use App\Exception\ProcessSerpException;
 use DOMXPath;
 use GuzzleHttp\Client;
 use Nette\Caching\Cache;
@@ -33,6 +34,10 @@ class ProcessGoogleSerp implements ProcessSerp
     }
 
 
+    /**
+     * @return SearchResults
+     * @throws ProcessSerpException
+     */
     public function process(): SearchResults {
         $result = new SearchResults();
 
@@ -44,8 +49,19 @@ class ProcessGoogleSerp implements ProcessSerp
         );
 
         $data = $this->getSERP($request);
-        $decoded = Json::decode($data);
+        try {
+            $decoded = Json::decode($data);
+        } catch (\JsonException $exception) {
+            throw new ProcessSerpException("Could not parse Google request data.",1,$exception);
+        }
+        assert($decoded instanceof \stdClass);
+        if(!property_exists($decoded,'organic_results') || !is_iterable($decoded->organic_results)) {
+            throw new ProcessSerpException("Could not parse Google request data, organic results not found",2);
+        }
         foreach ($decoded->organic_results as $resultItem) {
+            if(!property_exists($resultItem,'link') || !property_exists($resultItem,'title') || !property_exists($resultItem,'snippet')) {
+                throw new ProcessSerpException("Could not parse Google request data, required files not found",3);
+            }
             $result[] = new PageInfo($resultItem->link, $resultItem->title, $resultItem->snippet);
         }
         return $result;
@@ -56,13 +72,13 @@ class ProcessGoogleSerp implements ProcessSerp
         return $this->Cache->load( /** @phpstan-ignore return.type */
             $request,
             function () use ($request) {
-                return $this->getSERPnoCahe($request);
+                return $this->getSERPnoCache($request);
             }
         );
     }
 
 
-    protected function getSERPnoCahe(googleRequestDao $request): string
+    protected function getSERPnoCache(googleRequestDao $request): string
     {
         $request->validate();
 
@@ -94,6 +110,8 @@ class ProcessGoogleSerp implements ProcessSerp
     }
 
 
-
-
+    public function setQuery(string $query): void
+    {
+        $this->query = $query;
+    }
 }

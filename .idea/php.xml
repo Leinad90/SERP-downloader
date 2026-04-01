@@ -10,6 +10,11 @@
     <option name="highlightLevel" value="WARNING" />
     <option name="transferred" value="true" />
   </component>
+  <component name="PhpCSFixer">
+    <phpcsfixer_settings>
+      <PhpCSFixerConfiguration tool_path="$PROJECT_DIR$/web-project/vendor/bin/php-cs-fixer" />
+    </phpcsfixer_settings>
+  </component>
   <component name="PhpIncludePathManager">
     <include_path>
       <path value="$PROJECT_DIR$/webapp-skeleton/vendor/symfony/string" />
@@ -160,6 +165,38 @@
       <path value="$PROJECT_DIR$/web-project/vendor/phpstan/extension-installer" />
       <path value="$PROJECT_DIR$/web-project/vendor/symfony/deprecation-contracts" />
       <path value="$PROJECT_DIR$/web-project/vendor/symfony/thanks" />
+      <path value="$PROJECT_DIR$/web-project/vendor/clue/ndjson-react" />
+      <path value="$PROJECT_DIR$/web-project/vendor/evenement/evenement" />
+      <path value="$PROJECT_DIR$/web-project/vendor/react/cache" />
+      <path value="$PROJECT_DIR$/web-project/vendor/react/promise" />
+      <path value="$PROJECT_DIR$/web-project/vendor/react/event-loop" />
+      <path value="$PROJECT_DIR$/web-project/vendor/react/dns" />
+      <path value="$PROJECT_DIR$/web-project/vendor/react/child-process" />
+      <path value="$PROJECT_DIR$/web-project/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/web-project/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/web-project/vendor/react/socket" />
+      <path value="$PROJECT_DIR$/web-project/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/web-project/vendor/react/stream" />
+      <path value="$PROJECT_DIR$/web-project/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/web-project/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/web-project/vendor/symfony/options-resolver" />
+      <path value="$PROJECT_DIR$/web-project/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/web-project/vendor/symfony/polyfill-php84" />
+      <path value="$PROJECT_DIR$/web-project/vendor/symfony/filesystem" />
+      <path value="$PROJECT_DIR$/web-project/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/web-project/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/web-project/vendor/symfony/polyfill-php81" />
+      <path value="$PROJECT_DIR$/web-project/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/web-project/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/web-project/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/web-project/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/web-project/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/web-project/vendor/symfony/stopwatch" />
+      <path value="$PROJECT_DIR$/web-project/vendor/friendsofphp/php-cs-fixer" />
+      <path value="$PROJECT_DIR$/web-project/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/web-project/vendor/psr/event-dispatcher" />
+      <path value="$PROJECT_DIR$/web-project/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/web-project/vendor/fidry/cpu-core-counter" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.3">

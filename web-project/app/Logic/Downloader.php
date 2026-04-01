@@ -5,6 +5,7 @@ namespace App\Logic;
 use Http\Discovery\Psr17Factory;
 use Nette\Caching\Cache;
 use Nette\Caching\Storage;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 
 /**
@@ -28,10 +29,10 @@ class Downloader
      * @param string|UrlArray $url
      * @param mixed[] $formParams
      * @param array<string, mixed> $headers
-     * @return \Stringable|string
-     * @throws \Throwable
+     * @throws ClientExceptionInterface
+     * @return string
      */
-    public function download(string|array $url, array $formParams = [], array $headers = []): \Stringable|string {
+    public function download(string|array $url, array $formParams = [], array $headers = []): string {
         if(is_array($url)){
             $url = $this->unparse_url($url);
         }
@@ -39,13 +40,8 @@ class Downloader
             'User-Agent' => $this->userAgent,
         ];
         $headers = array_merge($defaultHeaders, $headers);
-        return $this->webCache->load($url,function () use ($url, $formParams, $headers){ /* @phpstan-ignore-line (getContents returning string) */
-            $request = $this->Psr17Factory->createRequest('GET', $url, [
-                'headers'=> $headers,
-                'form_params'=>$formParams
-            ]);
-            $response = $this->Client->sendRequest($request);
-            return $response->getBody()->getContents();
+        return $this->webCache->load($url, function() use ($url, $formParams, $headers) { /** @phpstan-ignore return.type (cache) */
+            return $this->downloadNoCache($url, $formParams, $headers);
         });
 
     }
@@ -66,6 +62,23 @@ class Downloader
         $query    = isset($parsed_url['query']) ? '?' . $parsed_url['query'] : '';
         $fragment = isset($parsed_url['fragment']) ? '#' . $parsed_url['fragment'] : '';
         return "$scheme$user$pass$host$port$path$query$fragment";
+    }
+
+    /**
+     * @param string $url
+     * @param array<string, mixed> $formParams
+     * @param array<string, mixed> $headers
+     * @return string
+     * @throws ClientExceptionInterface
+     */
+    protected function downloadNoCache(string $url, array $formParams, array $headers): string
+    {
+        $request = $this->Psr17Factory->createRequest('GET', $url, [
+            'headers'=> $headers,
+            'form_params'=>$formParams
+        ]);
+        $response = $this->Client->sendRequest($request);
+        return $response->getBody()->getContents();
     }
 
 }

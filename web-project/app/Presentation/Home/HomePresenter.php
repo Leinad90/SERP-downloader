@@ -22,18 +22,20 @@ final class HomePresenter extends Nette\Application\UI\Presenter
         $form->setMethod('GET');
         $form->addText('q','search query');
         $form->addSubmit('send','search');
-        $form->onSuccess[] = [$this, 'formSucceeded'];
+        $form->onSuccess[] = [$this, 'formSucceeded']; /** @phpstan-ignore assign.propertyType (nette magic) */
         return $form;
     }
 
-    public function formSucceeded(Nette\Forms\Form $form, \stdClass $values): never
+    public function formSucceeded(Nette\Forms\Form $form, Nette\Utils\ArrayHash $values): never
     {
-        $this->processSerp->query = $values->q;
+        $this->processSerp->setQuery($values->q);
         $result = $this->processSerp->process();
         $response= $this->getHttpResponse();
         $fileName = str_replace(['@query@','@date@','@time@'], [$values->q,date('Y-m-d'),date('H:i:s')], $this->fileName);
         $fileName = Nette\Utils\Strings::webalize($fileName);
-        $response->sendAsFile($fileName);
+        if(method_exists($response,'sendAsFile')) {
+            $response->sendAsFile($fileName);
+        }
         $this->sendJson($result);
     }
 }

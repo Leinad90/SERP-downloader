@@ -20,6 +20,6 @@ final class Error4xxPresenter extends Nette\Application\UI\Presenter
 			? $file
 			: __DIR__ . '/4xx.latte';
 		$this->template->httpCode = $code;
-		$this->template->setFile($file);
+		$this->getTemplate()->setFile($file);
 	}
 }

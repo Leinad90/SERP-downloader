@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Logic;
 
 use App\DAO\PageInfo;
 use App\DAO\SearchResults;
+use App\Exception\ProcessSerpException;
 use DOMXPath;
 use GuzzleHttp\Client;
 use Nette\Caching\Cache;
@@ -56,20 +59,25 @@ class ProcessDuckSerp implements ProcessSerp
         $DOM->loadHTML($data);
         $xpath = new DOMXPath($DOM);
         $xmlResulsts = $xpath->query("//div[contains(@class,'web-result')]");
-        foreach ($xmlResulsts as $xmlResulst) {
-            $titleXml = $xpath->query(".//h2", $xmlResulst);
+        assert($xmlResulsts!==false);
+        foreach ($xmlResulsts as $xmlResult) {
+            assert($xmlResult instanceof \DOMNode);
+            $titleXml = $xpath->query(".//h2", $xmlResult);
+            assert($titleXml!==false);
             $title = $titleXml[0]?->textContent;
-            bdump($xmlResulst->childNodes);
-            $spinnetXml = $xpath->query(".//a[@class='result__snippet']", $xmlResulst);
-            bdump($spinnetXml);
+            $spinnetXml = $xpath->query(".//a[@class='result__snippet']", $xmlResult);
+            assert($spinnetXml!==false);
             $spinnet = $spinnetXml[0]?->textContent;
             $url = $spinnetXml[0]?->getAttribute("href");
+            if($url===null || $title===null || $spinnet===null ) {
+                throw new ProcessSerpException("No data found");
+            }
             $result[] = new PageInfo($url,$title,$spinnet);
         }
         return $result;
     }
 
-    protected function getSerp(string $query): string|\Stringable
+    protected function getSerp(string $query): string
     {
         $urlParts = $this->urlParts;
         $params = ['q' => $query];
@@ -92,7 +100,10 @@ class ProcessDuckSerp implements ProcessSerp
         return $this->Downloader->download($url, $headers);
     }
 
-
+    public function setQuery(string $query): void
+    {
+        $this->query = $query;
+    }
 
 
 }
