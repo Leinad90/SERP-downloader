@@ -13,9 +13,9 @@ class SearchResults extends ArrayObject
 
     /**
      * @param PageInfo[]|mixed[] $array
-     * @param class-string|null $iteratorClass
+     * @param class-string $iteratorClass
      */
-    public function __construct(array $array = [], int $flags = 0, ?string $iteratorClass = ArrayIterator::class) {
+    public function __construct(array $array = [], int $flags = 0, string $iteratorClass = ArrayIterator::class) {
         foreach ($array as $key => $value) {
             $array[$key]=$this->normalize($value);
         }

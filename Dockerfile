@@ -1,4 +1,4 @@
-FROM php:8.5-apache
+FROM php:8.3-apache
 
 # Instalace potřebných PHP rozšíření
 RUN apt update && apt upgrade libicu-dev git zip sudo -y && docker-php-ext-configure intl && docker-php-ext-install intl && a2enmod rewrite

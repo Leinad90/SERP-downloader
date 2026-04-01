@@ -54,6 +54,10 @@ class googleRequestDao
         }
     }
 
+
+    /**
+     * @return array<string, string|int>
+     */
     public function toArray(): array
     {
         $map = [

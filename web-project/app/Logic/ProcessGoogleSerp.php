@@ -14,11 +14,7 @@ use Tracy\Debugger;
 
 class ProcessGoogleSerp implements ProcessSerp
 {
-    public string $query {
-        set {
-            $this->query = $value;
-        }
-    }
+    public string $query;
 
     private Cache $Cache;
 

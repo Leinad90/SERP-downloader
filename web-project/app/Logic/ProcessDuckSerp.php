@@ -11,11 +11,7 @@ use Nette\Caching\Storage;
 
 class ProcessDuckSerp implements ProcessSerp
 {
-    public string $query {
-        set {
-            $this->query = $value;
-        }
-    }
+    public string $query;
 
     private Cache $Cache;
 

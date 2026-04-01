@@ -18,6 +18,13 @@ class Downloader
         $this->webCache = new Cache($storage,'web');
     }
 
+    /**
+     * @param string|string[] $url
+     * @param mixed[] $formParams
+     * @param array<string, mixed> $headers
+     * @return \Stringable|string
+     * @throws \Throwable
+     */
     public function download(string|array $url, array $formParams = [], array $headers = []): \Stringable|string {
         if(is_array($url)){
             $url = $this->unparse_url($url);
@@ -32,7 +39,6 @@ class Downloader
                     'form_params'=>$formParams
                 ]
             );
-            bdump($response);
             return $response->getBody()->getContents();
         });
 
@@ -40,7 +46,7 @@ class Downloader
 
     /**
      * @source https://www.php.net/manual/en/function.parse-url.php#106731
-     * @param array $parsed_url
+     * @param array<string, string> $parsed_url
      * @return string
      */
     public function unparse_url(array $parsed_url): string {

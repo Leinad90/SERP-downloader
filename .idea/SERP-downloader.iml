@@ -118,6 +118,7 @@
       <excludeFolder url="file://$MODULE_DIR$/webapp-skeleton/vendor/symfony/var-exporter" />
       <excludeFolder url="file://$MODULE_DIR$/webapp-skeleton/vendor/symfony/yaml" />
       <excludeFolder url="file://$MODULE_DIR$/webapp-skeleton/vendor/tracy/tracy" />
+      <excludeFolder url="file://$MODULE_DIR$/web-project/log" />
       <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/guzzlehttp/guzzle" />
       <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/guzzlehttp/promises" />
@@ -145,6 +146,7 @@
       <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/php-http/discovery" />
       <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/phpstan/extension-installer" />
       <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/phpstan/phpstan" />
+      <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/phpstan/phpstan-nette" />
       <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/psr/http-client" />
       <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/psr/http-factory" />
       <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/psr/http-message" />
@@ -152,8 +154,6 @@
       <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/symfony/deprecation-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/symfony/thanks" />
       <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/tracy/tracy" />
-      <excludeFolder url="file://$MODULE_DIR$/web-project/log" />
-      <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/phpstan/phpstan-nette" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
