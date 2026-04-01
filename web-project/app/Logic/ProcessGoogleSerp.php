@@ -28,8 +28,7 @@ class ProcessGoogleSerp implements ProcessSerp
         Storage                     $Storage,
         private readonly ?string    $apiKey,
         private readonly Downloader $Downloader,
-    )
-    {
+    ) {
         $this->Cache = new Cache($Storage, self::class);
     }
 
@@ -38,13 +37,14 @@ class ProcessGoogleSerp implements ProcessSerp
      * @return SearchResults
      * @throws ProcessSerpException
      */
-    public function process(): SearchResults {
+    public function process(): SearchResults
+    {
         $result = new SearchResults();
 
         $request = new googleRequestDao(
             [
-                'q'=>$this->query,
-                'api_key'=>$this->apiKey
+                'q' => $this->query,
+                'api_key' => $this->apiKey,
             ]
         );
 
@@ -52,15 +52,15 @@ class ProcessGoogleSerp implements ProcessSerp
         try {
             $decoded = Json::decode($data);
         } catch (\JsonException $exception) {
-            throw new ProcessSerpException("Could not parse Google request data.",1,$exception);
+            throw new ProcessSerpException("Could not parse Google request data.", 1, $exception);
         }
         assert($decoded instanceof \stdClass);
-        if(!property_exists($decoded,'organic_results') || !is_iterable($decoded->organic_results)) {
-            throw new ProcessSerpException("Could not parse Google request data, organic results not found",2);
+        if (!property_exists($decoded, 'organic_results') || !is_iterable($decoded->organic_results)) {
+            throw new ProcessSerpException("Could not parse Google request data, organic results not found", 2);
         }
         foreach ($decoded->organic_results as $resultItem) {
-            if(!property_exists($resultItem,'link') || !property_exists($resultItem,'title') || !property_exists($resultItem,'snippet')) {
-                throw new ProcessSerpException("Could not parse Google request data, required files not found",3);
+            if (!property_exists($resultItem, 'link') || !property_exists($resultItem, 'title') || !property_exists($resultItem, 'snippet')) {
+                throw new ProcessSerpException("Could not parse Google request data, required files not found", 3);
             }
             $result[] = new PageInfo($resultItem->link, $resultItem->title, $resultItem->snippet);
         }
@@ -71,9 +71,7 @@ class ProcessGoogleSerp implements ProcessSerp
     {
         return $this->Cache->load( /** @phpstan-ignore return.type */
             $request,
-            function () use ($request) {
-                return $this->getSERPnoCache($request);
-            }
+            fn() => $this->getSERPnoCache($request)
         );
     }
 
@@ -94,7 +92,7 @@ class ProcessGoogleSerp implements ProcessSerp
         assert($url !== false);
 
         if (!empty($params)) {
-            if(!array_key_exists('query',$url)) {
+            if (!array_key_exists('query', $url)) {
                 $url['query'] = http_build_query($params);
             } else {
                 $existingParams = [];
@@ -105,7 +103,7 @@ class ProcessGoogleSerp implements ProcessSerp
         }
 
         bdump([$url, $params, $headers]);
-        $data = $this->Downloader->download($url,$params,$headers);
+        $data = $this->Downloader->download($url, $params, $headers);
         return $data;
     }
 

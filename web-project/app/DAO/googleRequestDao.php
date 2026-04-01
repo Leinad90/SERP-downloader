@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\DAO;
@@ -84,9 +85,7 @@ class googleRequestDao
         ];
 
         // odstraní null a prázdné stringy
-        return array_filter($map, static function ($v) {
-            return $v !== null && $v !== '';
-        });
+        return array_filter($map, static fn($v) => $v !== null && $v !== '');
     }
 
     public function toQueryString(): string

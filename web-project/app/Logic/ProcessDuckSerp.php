@@ -30,11 +30,10 @@ class ProcessDuckSerp implements ProcessSerp
         private readonly string     $url,
         Storage                     $Storage,
         private readonly Downloader $Downloader,
-    )
-    {
+    ) {
         $this->Cache = new Cache($Storage, self::class);
         $urlParts = parse_url($this->url);
-        if($urlParts === false) {
+        if ($urlParts === false) {
             throw new \InvalidArgumentException('Invalid URL');
         }
         $this->urlParts = $urlParts;
@@ -44,14 +43,13 @@ class ProcessDuckSerp implements ProcessSerp
     {
         return $this->Cache->load( /* @phpstan-ignore return.type  */
             $this->query,
-            function () {
-                return $this->processNoCache($this->query);
-            }
+            fn() => $this->processNoCache($this->query)
         );
     }
 
 
-    protected function processNoCache(string $query): SearchResults {
+    protected function processNoCache(string $query): SearchResults
+    {
         $result = new SearchResults();
         $data = $this->getSerp($query);
         libxml_use_internal_errors(true);
@@ -59,20 +57,20 @@ class ProcessDuckSerp implements ProcessSerp
         $DOM->loadHTML($data);
         $xpath = new DOMXPath($DOM);
         $xmlResulsts = $xpath->query("//div[contains(@class,'web-result')]");
-        assert($xmlResulsts!==false);
+        assert($xmlResulsts !== false);
         foreach ($xmlResulsts as $xmlResult) {
             assert($xmlResult instanceof \DOMNode);
             $titleXml = $xpath->query(".//h2", $xmlResult);
-            assert($titleXml!==false);
+            assert($titleXml !== false);
             $title = $titleXml[0]?->textContent;
             $spinnetXml = $xpath->query(".//a[@class='result__snippet']", $xmlResult);
-            assert($spinnetXml!==false);
+            assert($spinnetXml !== false);
             $spinnet = $spinnetXml[0]?->textContent;
             $url = $spinnetXml[0]?->getAttribute("href");
-            if($url===null || $title===null || $spinnet===null ) {
+            if ($url === null || $title === null || $spinnet === null) {
                 throw new ProcessSerpException("No data found");
             }
-            $result[] = new PageInfo($url,$title,$spinnet);
+            $result[] = new PageInfo($url, $title, $spinnet);
         }
         return $result;
     }
@@ -84,19 +82,19 @@ class ProcessDuckSerp implements ProcessSerp
         $urlParts['query'] = http_build_query($params);
         $url = $this->Downloader->unparse_url($urlParts);
         $headers = [
-                            'User-Agent' => 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:148.0) Gecko/20100101 Firefox/148.0',
-                            'Accept'=>'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                            'Accept-Language'=>'cs,sk;q=0.9,en-US;q=0.8,en;q=0.7',
-                            'Accept-Encoding'=>'gzip, deflate, br, zstd',
-                            'DNT'=>'1',
-                            'Connection'=>'keep-alive',
-                            'Upgrade-Insecure-Requests'=>1,
-                            'Sec-Fetch-Dest'=>'document',
-                            'Sec-Fetch-Mode'=>'navigate',
-                            'Sec-Fetch-Site'=>'none',
-                            'Sec-Fetch-User'=>'?1',
-                            'Priority'=>'u=0, i',
-            ];
+            'User-Agent' => 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:148.0) Gecko/20100101 Firefox/148.0',
+            'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language' => 'cs,sk;q=0.9,en-US;q=0.8,en;q=0.7',
+            'Accept-Encoding' => 'gzip, deflate, br, zstd',
+            'DNT' => '1',
+            'Connection' => 'keep-alive',
+            'Upgrade-Insecure-Requests' => 1,
+            'Sec-Fetch-Dest' => 'document',
+            'Sec-Fetch-Mode' => 'navigate',
+            'Sec-Fetch-Site' => 'none',
+            'Sec-Fetch-User' => '?1',
+            'Priority' => 'u=0, i',
+        ];
         return $this->Downloader->download($url, $headers);
     }
 

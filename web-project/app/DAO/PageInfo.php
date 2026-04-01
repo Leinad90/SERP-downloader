@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DAO;
 
 class PageInfo
@@ -8,9 +10,7 @@ class PageInfo
         public string $url,
         public string $title,
         public string $description,
-    ) {
-
-    }
+    ) {}
 
     /**
      * @param array{url?: string, title?: string, description?: string}|mixed[] $array

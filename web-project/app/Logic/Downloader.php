@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Logic;
 
 use Http\Discovery\Psr17Factory;
@@ -22,7 +24,7 @@ class Downloader
         private readonly Psr17Factory $Psr17Factory,
         private readonly string $userAgent,
     ) {
-        $this->webCache = new Cache($storage,'web');
+        $this->webCache = new Cache($storage, 'web');
     }
 
     /**
@@ -32,15 +34,16 @@ class Downloader
      * @throws ClientExceptionInterface
      * @return string
      */
-    public function download(string|array $url, array $formParams = [], array $headers = []): string {
-        if(is_array($url)){
+    public function download(string|array $url, array $formParams = [], array $headers = []): string
+    {
+        if (is_array($url)) {
             $url = $this->unparse_url($url);
         }
         $defaultHeaders = [
             'User-Agent' => $this->userAgent,
         ];
         $headers = array_merge($defaultHeaders, $headers);
-        return $this->webCache->load($url, function() use ($url, $formParams, $headers) { /** @phpstan-ignore return.type (cache) */
+        return $this->webCache->load($url, function () use ($url, $formParams, $headers) { /** @phpstan-ignore return.type (cache) */
             return $this->downloadNoCache($url, $formParams, $headers);
         });
 
@@ -51,12 +54,13 @@ class Downloader
      * @param UrlArray $parsed_url
      * @return string
      */
-    public function unparse_url(array $parsed_url): string {
+    public function unparse_url(array $parsed_url): string
+    {
         $scheme   = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
         $host     = $parsed_url['host'] ?? '';
         $port     = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
         $user     = $parsed_url['user'] ?? '';
-        $pass     = isset($parsed_url['pass']) ? ':' . $parsed_url['pass']  : '';
+        $pass     = isset($parsed_url['pass']) ? ':' . $parsed_url['pass'] : '';
         $pass     = ($user || $pass) ? "$pass@" : '';
         $path     = $parsed_url['path'] ?? '';
         $query    = isset($parsed_url['query']) ? '?' . $parsed_url['query'] : '';
@@ -74,8 +78,8 @@ class Downloader
     protected function downloadNoCache(string $url, array $formParams, array $headers): string
     {
         $request = $this->Psr17Factory->createRequest('GET', $url, [
-            'headers'=> $headers,
-            'form_params'=>$formParams
+            'headers' => $headers,
+            'form_params' => $formParams,
         ]);
         $response = $this->Client->sendRequest($request);
         return $response->getBody()->getContents();
