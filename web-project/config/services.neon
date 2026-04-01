@@ -3,6 +3,7 @@ services:
 #	- App\Logic\ProcessDuckSerp(url: "%duckDuckGoUrl%")
 	- App\Logic\ProcessGoogleSerp(url: "%googleUrl%", apiKey: %googleApiKey%)
 	- GuzzleHttp\Client
+	- Http\Discovery\Psr17Factory
 	- App\Logic\Downloader(userAgent: "%applicationName% %version%")
 	- App\Presentation\Home\HomePresenter(fileName: 'search result @query@ @date@ @time@.json')
 

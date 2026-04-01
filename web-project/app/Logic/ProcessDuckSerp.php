@@ -9,11 +9,18 @@ use GuzzleHttp\Client;
 use Nette\Caching\Cache;
 use Nette\Caching\Storage;
 
+/**
+ * @phpstan-import-type UrlArray from Downloader
+ */
+
 class ProcessDuckSerp implements ProcessSerp
 {
     public string $query;
 
     private Cache $Cache;
+
+    /** @var UrlArray $urlParts */
+    private array $urlParts;
 
 
     public function __construct(
@@ -23,11 +30,16 @@ class ProcessDuckSerp implements ProcessSerp
     )
     {
         $this->Cache = new Cache($Storage, self::class);
+        $urlParts = parse_url($this->url);
+        if($urlParts === false) {
+            throw new \InvalidArgumentException('Invalid URL');
+        }
+        $this->urlParts = $urlParts;
     }
 
     public function process(): SearchResults
     {
-        return $this->Cache->load(
+        return $this->Cache->load( /* @phpstan-ignore return.type  */
             $this->query,
             function () {
                 return $this->processNoCache($this->query);
@@ -59,12 +71,11 @@ class ProcessDuckSerp implements ProcessSerp
 
     protected function getSerp(string $query): string|\Stringable
     {
-        $urlParts = parse_url($this->url);
+        $urlParts = $this->urlParts;
         $params = ['q' => $query];
         $urlParts['query'] = http_build_query($params);
         $url = $this->Downloader->unparse_url($urlParts);
         $headers = [
-                            'Host'=> $urlParts['host'],
                             'User-Agent' => 'User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:148.0) Gecko/20100101 Firefox/148.0',
                             'Accept'=>'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
                             'Accept-Language'=>'cs,sk;q=0.9,en-US;q=0.8,en;q=0.7',

@@ -2,9 +2,14 @@
 
 namespace App\Logic;
 
+use Http\Discovery\Psr17Factory;
 use Nette\Caching\Cache;
 use Nette\Caching\Storage;
 use Psr\Http\Client\ClientInterface;
+
+/**
+ * @phpstan-type UrlArray array{scheme?: string, host?: string, port?: int<0,65535>, user?: string, pass?: string, query?: string, path?: string, fragment?: string}
+ */
 
 class Downloader
 {
@@ -13,13 +18,14 @@ class Downloader
     public function __construct(
         private readonly ClientInterface $Client,
         Storage $storage,
+        private readonly Psr17Factory $Psr17Factory,
         private readonly string $userAgent,
     ) {
         $this->webCache = new Cache($storage,'web');
     }
 
     /**
-     * @param string|string[] $url
+     * @param string|UrlArray $url
      * @param mixed[] $formParams
      * @param array<string, mixed> $headers
      * @return \Stringable|string
@@ -33,12 +39,12 @@ class Downloader
             'User-Agent' => $this->userAgent,
         ];
         $headers = array_merge($defaultHeaders, $headers);
-        return $this->webCache->load($url,function () use ($url, $formParams, $headers){
-            $response = $this->Client->get($url,[
-                    'headers'=> $headers,
-                    'form_params'=>$formParams
-                ]
-            );
+        return $this->webCache->load($url,function () use ($url, $formParams, $headers){ /* @phpstan-ignore-line (getContents returning string) */
+            $request = $this->Psr17Factory->createRequest('GET', $url, [
+                'headers'=> $headers,
+                'form_params'=>$formParams
+            ]);
+            $response = $this->Client->sendRequest($request);
             return $response->getBody()->getContents();
         });
 
@@ -46,7 +52,7 @@ class Downloader
 
     /**
      * @source https://www.php.net/manual/en/function.parse-url.php#106731
-     * @param array<string, string> $parsed_url
+     * @param UrlArray $parsed_url
      * @return string
      */
     public function unparse_url(array $parsed_url): string {

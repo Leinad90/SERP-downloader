@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Logic;
 
 use App\DAO\googleRequestDao;
@@ -43,15 +45,24 @@ class ProcessGoogleSerp implements ProcessSerp
 
         $data = $this->getSERP($request);
         $decoded = Json::decode($data);
-        Debugger::log($decoded);
         foreach ($decoded->organic_results as $resultItem) {
             $result[] = new PageInfo($resultItem->link, $resultItem->title, $resultItem->snippet);
         }
         return $result;
     }
 
+    public function getSERP(googleRequestDao $request): string
+    {
+        return $this->Cache->load( /** @phpstan-ignore return.type */
+            $request,
+            function () use ($request) {
+                return $this->getSERPnoCahe($request);
+            }
+        );
+    }
 
-    protected function getSERP(googleRequestDao $request): string
+
+    protected function getSERPnoCahe(googleRequestDao $request): string
     {
         $request->validate();
 
@@ -64,6 +75,7 @@ class ProcessGoogleSerp implements ProcessSerp
         }
 
         $url = parse_url($this->url);
+        assert($url !== false);
 
         if (!empty($params)) {
             if(!array_key_exists('query',$url)) {
