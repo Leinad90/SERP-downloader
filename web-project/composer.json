@@ -42,7 +42,16 @@
 	},
 	"scripts": {
 		"phpstan": "phpstan analyse -c develop/phpstan.neon",
-		"tester": "tester tests -s"
+		"tester": "tester test -s",
+		"cs-fix": "php-cs-fixer fix --config=.php-cs-fixer.dist.php --verbose",
+		"cs-check": "php-cs-fixer fix --config=.php-cs-fixer.dist.php --verbose --dry-run",
+		"cs-fix-ci": "php-cs-fixer fix --config=.php-cs-fixer.dist.php --verbose --diff",
+		"cs-check-ci": "php-cs-fixer fix --config=.php-cs-fixer.dist.php --verbose --dry-run --diff",
+		"test": [
+			"composer phpstan",
+			"composer tester",
+			"composer cs-check"
+		]
 	},
 	"minimum-stability": "stable",
 	"config": {
