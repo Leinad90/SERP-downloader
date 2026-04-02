@@ -48,10 +48,12 @@
 		"cs-check": "php-cs-fixer fix --config=.php-cs-fixer.dist.php --verbose --dry-run",
 		"cs-fix-ci": "php-cs-fixer fix --config=.php-cs-fixer.dist.php --verbose --diff",
 		"cs-check-ci": "php-cs-fixer fix --config=.php-cs-fixer.dist.php --verbose --dry-run --diff",
+		"latte-check": "latte-lint app",
 		"test": [
 			"composer phpstan",
 			"composer tester",
-			"composer cs-check"
+			"composer cs-check",
+			"composer latte-check"
 		]
 	},
 	"minimum-stability": "stable",
