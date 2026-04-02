@@ -186,6 +186,8 @@
       <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/symfony/string" />
       <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/symfony/thanks" />
       <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/tracy/tracy" />
+      <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/hamcrest/hamcrest-php" />
+      <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/mockery/mockery" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

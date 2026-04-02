@@ -210,6 +210,8 @@
       <path value="$PROJECT_DIR$/web-project/vendor/psr/event-dispatcher" />
       <path value="$PROJECT_DIR$/web-project/vendor/psr/log" />
       <path value="$PROJECT_DIR$/web-project/vendor/fidry/cpu-core-counter" />
+      <path value="$PROJECT_DIR$/web-project/vendor/mockery/mockery" />
+      <path value="$PROJECT_DIR$/web-project/vendor/hamcrest/hamcrest-php" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.3">
