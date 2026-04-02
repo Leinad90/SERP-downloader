@@ -9,7 +9,6 @@ use Tracy\Debugger;
 
 abstract class BasePresenter extends Presenter
 {
-
     protected function log(mixed $message, string $level): void
     {
         Debugger::log($message, $level);

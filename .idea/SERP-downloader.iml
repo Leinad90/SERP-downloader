@@ -188,6 +188,7 @@
       <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/tracy/tracy" />
       <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/hamcrest/hamcrest-php" />
       <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/mockery/mockery" />
+      <excludeFolder url="file://$MODULE_DIR$/web-project/vendor/phpstan/phpstan-mockery" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

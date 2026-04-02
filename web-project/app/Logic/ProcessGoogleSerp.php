@@ -96,20 +96,7 @@ class ProcessGoogleSerp implements ProcessSerp
             $headers['Authorization'] = 'Bearer ' . $request->api_key;
         }
 
-        $url = parse_url($this->url);
-        assert($url !== false);
-
-        if (!empty($params)) {
-            if (!array_key_exists('query', $url)) {
-                $url['query'] = http_build_query($params);
-            } else {
-                $existingParams = [];
-                parse_str($url['query'], $existingParams);
-                $mergedParams = array_merge($existingParams, $params);
-                $url['query'] = http_build_query($mergedParams);
-            }
-        }
-        return $this->Downloader->download($url, $params, $headers);
+        return $this->Downloader->download($this->url, $params, $headers);
     }
 
 

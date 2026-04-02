@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace test;
@@ -9,6 +10,7 @@ use Mockery;
 use Nette;
 use Tester;
 use Tester\Assert;
+
 use function _PHPStan_5a70c2d68\Symfony\Component\String\b;
 
 require __DIR__ . "/../vendor/autoload.php";
@@ -18,25 +20,28 @@ class GoogleTest extends Tester\TestCase
     public function testGoogle(): void
     {
         $url = 'http://testing/serp';
+        $query = 'Coffee';
+
         $downloader = Mockery::mock(Downloader::class);
-        $key = Nette\Utils\Random::generate(10);
+        $key = Nette\Utils\Random::generate();
+
+        $googleResult = file_get_contents('searchCoffee.json');
+        if ($googleResult === false) {
+            throw new \Exception("Could not read searchCoffee.json");
+        }
 
         $downloader
             ->shouldReceive('download')
-            /*->with([
-                'url'=>[
-                    'scheme' => 'http',
-                    'host' => 'testing',
-                    'path' => '/serp',
-                    'query' => 'engine=google&api_key='.$key.'&q=Coffee'
+            ->with(
+                $url,
+                [
+                    'engine' => 'google',
+                    'api_key' => $key,
+                    'q' => $query,
                 ],
-                'formparams' => [
-                    'engine'=>'google',
-                    'api_key'=>$key,
-                    'q'=>'Coffee'
-                ]
-            ])*/
-            ->andReturn(file_get_contents('searchCoffee.json'));
+                []
+            )
+            ->andReturn($googleResult);
 
         $processGoogleSerp = new \App\Logic\ProcessGoogleSerp(
             $url,
@@ -44,13 +49,18 @@ class GoogleTest extends Tester\TestCase
             $key,
             $downloader
         );
-        $processGoogleSerp->setQuery('Coffee');
+        $processGoogleSerp->setQuery($query);
 
-        $actual = Nette\Utils\Json::decode( Nette\Utils\Json::encode($processGoogleSerp->process()));
-        $expected = Nette\Utils\Json::decode(file_get_contents('resultCoffee.json'));
+        $ourResult = file_get_contents('resultCoffee.json');
+        if ($ourResult === false) {
+            throw new \Exception("Could not read resultCoffee.json");
+        }
+
+        $actual = Nette\Utils\Json::decode(Nette\Utils\Json::encode($processGoogleSerp->process()));
+        $expected = Nette\Utils\Json::decode($ourResult);
 
 
-        Assert::equal($actual,$expected);
+        Assert::equal($actual, $expected);
 
     }
 }

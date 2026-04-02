@@ -212,6 +212,7 @@
       <path value="$PROJECT_DIR$/web-project/vendor/fidry/cpu-core-counter" />
       <path value="$PROJECT_DIR$/web-project/vendor/mockery/mockery" />
       <path value="$PROJECT_DIR$/web-project/vendor/hamcrest/hamcrest-php" />
+      <path value="$PROJECT_DIR$/web-project/vendor/phpstan/phpstan-mockery" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.3">
