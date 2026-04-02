@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Logic;
 
+use App\Exception\DownloadException;
 use Http\Discovery\Psr17Factory;
 use Nette\Caching\Cache;
 use Nette\Caching\Storage;
@@ -31,7 +32,7 @@ class Downloader
      * @param string|UrlArray $url
      * @param mixed[] $formParams
      * @param array<string, mixed> $headers
-     * @throws ClientExceptionInterface
+     * @throws DownloadException
      * @return string
      */
     public function download(string|array $url, array $formParams = [], array $headers = []): string
@@ -73,7 +74,7 @@ class Downloader
      * @param array<string, mixed> $formParams
      * @param array<string, mixed> $headers
      * @return string
-     * @throws ClientExceptionInterface
+     * @throws DownloadException
      */
     protected function downloadNoCache(string $url, array $formParams, array $headers): string
     {
@@ -81,7 +82,11 @@ class Downloader
             'headers' => $headers,
             'form_params' => $formParams,
         ]);
-        $response = $this->Client->sendRequest($request);
+        try {
+            $response = $this->Client->sendRequest($request);
+        } catch (ClientExceptionInterface $e) {
+            throw new DownloadException($e->getMessage(), $e->getCode(), $e);
+        }
         return $response->getBody()->getContents();
     }
 

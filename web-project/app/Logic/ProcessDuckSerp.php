@@ -6,6 +6,7 @@ namespace App\Logic;
 
 use App\DAO\PageInfo;
 use App\DAO\SearchResults;
+use App\Exception\DownloadException;
 use App\Exception\ProcessSerpException;
 use DOMXPath;
 use GuzzleHttp\Client;
@@ -48,6 +49,10 @@ class ProcessDuckSerp implements ProcessSerp
     }
 
 
+    /**
+     * @throws ProcessSerpException
+     * @throws DownloadException
+     */
     protected function processNoCache(string $query): SearchResults
     {
         $result = new SearchResults();
@@ -75,6 +80,9 @@ class ProcessDuckSerp implements ProcessSerp
         return $result;
     }
 
+    /**
+     * @throws DownloadException
+     */
     protected function getSerp(string $query): string
     {
         $urlParts = $this->urlParts;

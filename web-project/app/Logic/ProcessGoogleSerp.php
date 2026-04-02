@@ -7,6 +7,7 @@ namespace App\Logic;
 use App\DAO\googleRequestDao;
 use App\DAO\PageInfo;
 use App\DAO\SearchResults;
+use App\Exception\DownloadException;
 use App\Exception\ProcessSerpException;
 use DOMXPath;
 use GuzzleHttp\Client;
@@ -36,6 +37,7 @@ class ProcessGoogleSerp implements ProcessSerp
     /**
      * @return SearchResults
      * @throws ProcessSerpException
+     * @throws DownloadException
      */
     public function process(): SearchResults
     {
@@ -67,7 +69,10 @@ class ProcessGoogleSerp implements ProcessSerp
         return $result;
     }
 
-    public function getSERP(googleRequestDao $request): string
+    /**
+     * @throws DownloadException
+     */
+    protected function getSERP(googleRequestDao $request): string
     {
         return $this->Cache->load( /** @phpstan-ignore return.type */
             $request,
@@ -76,6 +81,9 @@ class ProcessGoogleSerp implements ProcessSerp
     }
 
 
+    /**
+     * @throws DownloadException
+     */
     protected function getSERPnoCache(googleRequestDao $request): string
     {
         $request->validate();
@@ -101,10 +109,7 @@ class ProcessGoogleSerp implements ProcessSerp
                 $url['query'] = http_build_query($mergedParams);
             }
         }
-
-        bdump([$url, $params, $headers]);
-        $data = $this->Downloader->download($url, $params, $headers);
-        return $data;
+        return $this->Downloader->download($url, $params, $headers);
     }
 
 
