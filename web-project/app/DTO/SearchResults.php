@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\DAO;
+namespace App\DTO;
 
 use ArrayIterator;
 use ArrayObject;

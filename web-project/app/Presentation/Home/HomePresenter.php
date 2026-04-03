@@ -23,6 +23,7 @@ final class HomePresenter extends BasePresenter
     public function createComponentForm(): Nette\Forms\Form
     {
         $form = new Nette\Application\UI\Form();
+        $form->setTranslator($this->Translator);
         $form->setMethod('GET');
         $form->addText('q', 'search query');
         $form->addSubmit('send', 'search');

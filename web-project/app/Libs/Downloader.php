@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Logic;
+namespace App\Libs;
 
 use App\Exception\DownloadException;
 use Http\Discovery\Psr17Factory;

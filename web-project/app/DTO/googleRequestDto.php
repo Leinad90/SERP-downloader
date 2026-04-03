@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\DAO;
+namespace App\DTO;
 
-class googleRequestDao
+class googleRequestDto
 {
     public ?string $engine = 'google';
     public ?string $api_key = null;

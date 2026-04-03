@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace test;
 
-use App\DAO\SearchResults;
-use App\Logic\Downloader;
+use App\Libs\Downloader;
 use Mockery;
 use Nette;
 use Tester;
 use Tester\Assert;
-
-use function _PHPStan_5a70c2d68\Symfony\Component\String\b;
 
 require __DIR__ . "/../vendor/autoload.php";
 

@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Logic;
 
-use App\DAO\googleRequestDao;
-use App\DAO\PageInfo;
-use App\DAO\SearchResults;
+use App\DTO\googleRequestDto;
+use App\DTO\PageInfo;
+use App\DTO\SearchResults;
 use App\Exception\DownloadException;
 use App\Exception\ProcessSerpException;
+use App\Libs\Downloader;
 use Nette\Caching\Cache;
 use Nette\Caching\Storage;
 use Nette\Utils\Json;
@@ -42,7 +43,7 @@ class ProcessGoogleSerp implements ProcessSerp
     {
         $result = new SearchResults();
 
-        $request = new googleRequestDao(
+        $request = new googleRequestDto(
             [
                 'q' => $this->query,
                 'api_key' => $this->apiKey,
@@ -138,7 +139,7 @@ class ProcessGoogleSerp implements ProcessSerp
     /**
      * @throws DownloadException
      */
-    protected function getSERP(googleRequestDao $request): string
+    protected function getSERP(googleRequestDto $request): string
     {
         return $this->Cache->load( /** @phpstan-ignore return.type */
             $request,
@@ -150,7 +151,7 @@ class ProcessGoogleSerp implements ProcessSerp
     /**
      * @throws DownloadException
      */
-    protected function getSERPnoCache(googleRequestDao $request): string
+    protected function getSERPnoCache(googleRequestDto $request): string
     {
         $request->validate();
 

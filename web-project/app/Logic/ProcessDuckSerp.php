@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Logic;
 
-use App\DAO\PageInfo;
-use App\DAO\SearchResults;
+use App\DTO\PageInfo;
+use App\DTO\SearchResults;
 use App\Exception\DownloadException;
 use App\Exception\ProcessSerpException;
+use App\Libs\Downloader;
 use DOMXPath;
-use GuzzleHttp\Client;
 use Nette\Caching\Cache;
 use Nette\Caching\Storage;
 
