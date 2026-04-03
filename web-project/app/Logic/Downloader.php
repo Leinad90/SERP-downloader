@@ -44,7 +44,7 @@ class Downloader
             'User-Agent' => $this->userAgent,
         ];
         $headers = array_merge($defaultHeaders, $headers);
-        return $this->webCache->load($url, function () use ($url, $formParams, $headers) { /** @phpstan-ignore return.type (cache) */
+        return $this->webCache->load([$url, $formParams, $headers], function () use ($url, $formParams, $headers) { /** @phpstan-ignore return.type (cache) */
             return $this->downloadNoCache($url, $formParams, $headers);
         });
 

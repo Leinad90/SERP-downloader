@@ -9,12 +9,11 @@ use App\DAO\PageInfo;
 use App\DAO\SearchResults;
 use App\Exception\DownloadException;
 use App\Exception\ProcessSerpException;
-use DOMXPath;
-use GuzzleHttp\Client;
 use Nette\Caching\Cache;
 use Nette\Caching\Storage;
 use Nette\Utils\Json;
-use Tracy\Debugger;
+use Nette\Utils\JsonException;
+use stdClass;
 
 class ProcessGoogleSerp implements ProcessSerp
 {
@@ -51,22 +50,89 @@ class ProcessGoogleSerp implements ProcessSerp
         );
 
         $data = $this->getSERP($request);
-        try {
-            $decoded = Json::decode($data);
-        } catch (\JsonException $exception) {
-            throw new ProcessSerpException("Could not parse Google request data.", 1, $exception);
-        }
-        assert($decoded instanceof \stdClass);
-        if (!property_exists($decoded, 'organic_results') || !is_iterable($decoded->organic_results)) {
-            throw new ProcessSerpException("Could not parse Google request data, organic results not found", 2);
-        }
+        $decoded = $this->validateSearchResponse($data);
+
+
         foreach ($decoded->organic_results as $resultItem) {
-            if (!property_exists($resultItem, 'link') || !property_exists($resultItem, 'title') || !property_exists($resultItem, 'snippet')) {
-                throw new ProcessSerpException("Could not parse Google request data, required files not found", 3);
-            }
             $result[] = new PageInfo($resultItem->link, $resultItem->title, $resultItem->snippet);
         }
         return $result;
+    }
+
+    /**
+     * @throws ProcessSerpException
+     */
+    private function validateSearchResponse(string $data): stdClass
+    {
+        try {
+            $decoded = Json::decode($data);
+            if (!$decoded instanceof stdClass) {
+                throw new ProcessSerpException('Google response must be an object.');
+            }
+        } catch (JsonException $e) {
+            throw new ProcessSerpException('Google response is not valid JSON: ' . $e->getMessage(), __LINE__, $e);
+        }
+
+        if (!property_exists($decoded, 'organic_results')) {
+            throw new ProcessSerpException('Google response does not contain organic_results.', 3);
+        }
+
+        if (!is_array($decoded->organic_results)) {
+            throw new ProcessSerpException('Google response organic_results must be an array.', 4);
+        }
+
+        foreach ($decoded->organic_results as $index => $resultItem) {
+            $this->validateOrganicResult($resultItem, $index);
+        }
+        return $decoded;
+    }
+
+    /**
+     * @throws ProcessSerpException
+     */
+    private function validateOrganicResult(mixed $resultItem, int $index): void
+    {
+        if (!$resultItem instanceof stdClass) {
+            throw new ProcessSerpException(sprintf('organic_results[%d] must be an object.', $index), 5);
+        }
+
+        $this->requireInt($resultItem, 'position', $index);
+        $this->requireString($resultItem, 'title', $index);
+        $this->requireString($resultItem, 'link', $index);
+        $this->requireString($resultItem, 'snippet', $index);
+
+    }
+
+
+
+    /**
+     * @throws ProcessSerpException
+     */
+    private function requireString(stdClass $object, string $property, int $index): string
+    {
+        if (!property_exists($object, $property) || !is_string($object->{$property}) || $object->{$property} === '') {
+            throw new ProcessSerpException(
+                sprintf('organic_results[%d].%s must be a non-empty string.', $index, $property),
+                8
+            );
+        }
+
+        return $object->{$property};
+    }
+
+    /**
+     * @throws ProcessSerpException
+     */
+    private function requireInt(stdClass $object, string $property, int $index): int
+    {
+        if (!property_exists($object, $property) || !is_int($object->{$property})) {
+            throw new ProcessSerpException(
+                sprintf('organic_results[%d].%s must be an integer.', $index, $property),
+                9
+            );
+        }
+
+        return $object->{$property};
     }
 
     /**
