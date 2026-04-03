@@ -41,7 +41,6 @@ class ProcessGoogleSerp implements ProcessSerp
      */
     public function process(): SearchResults
     {
-        $result = new SearchResults();
 
         $request = new googleRequestDto(
             [
@@ -50,10 +49,22 @@ class ProcessGoogleSerp implements ProcessSerp
             ]
         );
 
+        return $this->Cache->load( /* @phpstan-ignore return.type  */
+            $request,
+            fn() => $this->realProcess($request)
+        );
+    }
+
+    /**
+     * @return SearchResults
+     * @throws ProcessSerpException
+     * @throws DownloadException
+     */
+    public function realProcess(googleRequestDto $request): SearchResults
+    {
+        $result = new SearchResults();
         $data = $this->getSERP($request);
         $decoded = $this->validateSearchResponse($data);
-
-
         foreach ($decoded->organic_results as $resultItem) {
             $result[] = new PageInfo($resultItem->link, $resultItem->title, $resultItem->snippet);
         }
@@ -136,22 +147,11 @@ class ProcessGoogleSerp implements ProcessSerp
         return $object->{$property};
     }
 
+
     /**
      * @throws DownloadException
      */
     protected function getSERP(googleRequestDto $request): string
-    {
-        return $this->Cache->load( /** @phpstan-ignore return.type */
-            $request,
-            fn() => $this->getSERPnoCache($request)
-        );
-    }
-
-
-    /**
-     * @throws DownloadException
-     */
-    protected function getSERPnoCache(googleRequestDto $request): string
     {
         $request->validate();
 

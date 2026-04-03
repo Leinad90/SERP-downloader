@@ -35,17 +35,23 @@ class Downloader
      * @throws DownloadException
      * @return string
      */
-    public function download(string|array $url, array $formParams = [], array $headers = []): string
+    public function download(string|array $url, array $formParams = [], array $headers = [], string $method = 'GET'): string
     {
         if (is_array($url)) {
+            $url = $this->unparse_url($url);
+        }
+        if(count($formParams) && $method==='GET') {
+            $url = parse_url($url);
+            parse_str($url['query'] ?? '', $existingQuery);
+            $url['query'] = http_build_query(array_merge($formParams, $existingQuery));
             $url = $this->unparse_url($url);
         }
         $defaultHeaders = [
             'User-Agent' => $this->userAgent,
         ];
         $headers = array_merge($defaultHeaders, $headers);
-        return $this->webCache->load([$url, $formParams, $headers], function () use ($url, $formParams, $headers) { /** @phpstan-ignore return.type (cache) */
-            return $this->downloadNoCache($url, $formParams, $headers);
+        return $this->webCache->load([$url, $formParams, $headers], function () use ($url, $formParams, $headers, $method) { /** @phpstan-ignore return.type (cache) */
+            return $this->downloadNoCache($url, $formParams, $headers, $method);
         });
 
     }
@@ -76,9 +82,10 @@ class Downloader
      * @return string
      * @throws DownloadException
      */
-    protected function downloadNoCache(string $url, array $formParams, array $headers): string
+    protected function downloadNoCache(string $url, array $formParams, array $headers, string $method): string
     {
-        $request = $this->Psr17Factory->createRequest('GET', $url, [
+        bdump(func_get_args());
+        $request = $this->Psr17Factory->createRequest($method, $url, [
             'headers' => $headers,
             'form_params' => $formParams,
         ]);
