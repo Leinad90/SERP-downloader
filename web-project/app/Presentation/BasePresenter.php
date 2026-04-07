@@ -7,21 +7,25 @@ namespace App\Presentation;
 use App\Libs\Translator;
 use Nette\Application\UI\Presenter;
 use Nette\DI\Attributes\Inject;
-use Tracy\Debugger;
+use Psr\Log\LoggerInterface;
 
 abstract class BasePresenter extends Presenter
 {
 
     #[Inject]
     public Translator $Translator;
-    protected function log(mixed $message, string $level): void
+
+    #[Inject]
+    public LoggerInterface $Logger;
+
+    protected function log(mixed $message, ?string $level=null): void
     {
-        Debugger::log($message, $level);
+        $this->Logger->log($level, $message);
     }
 
-    public function beforeRender()
-    {
+    public function beforeRender(): void {
         parent::beforeRender();
-        $this->getTemplate()->setTranslator($this->Translator);
+        $this->template->setTranslator($this->Translator);
     }
+
 }

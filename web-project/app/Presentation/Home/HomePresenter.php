@@ -12,6 +12,7 @@ use Nette;
 use Nette\Forms\Form;
 use Nette\Utils\ArrayHash;
 use Nette\Utils\Strings;
+use Psr\Log\LogLevel;
 use Tracy\ILogger;
 use Nette\Http\IResponse;
 
@@ -19,7 +20,8 @@ final class HomePresenter extends BasePresenter
 {
     public function __construct(
         private readonly ProcessSerp $processSerp,
-        private readonly string $fileName
+        private readonly string $fileName,
+        private readonly bool $webalizeName = false
     ) {
         parent::__construct();
     }
@@ -31,6 +33,7 @@ final class HomePresenter extends BasePresenter
         $form->addText('q', 'search query');
         $form->addSubmit('send', 'search');
         $form->onSuccess[] = [$this, 'formSucceeded']; /** @phpstan-ignore assign.propertyType (nette magic) */
+        $form->onSuccess[] = fn() => $this->redirect('this'); /** @phpstan-ignore assign.propertyType (nette magic) */
         return $form;
     }
 
@@ -41,26 +44,22 @@ final class HomePresenter extends BasePresenter
         try {
             $result = $this->processSerp->process();
         } catch (ProcessSerpException $e) {
-            $this->log($e, ILogger::EXCEPTION);
+            $this->log($e, LogLevel::ERROR);
             $response->setCode(IResponse::S500_InternalServerError);
-            $this->terminate();
-            //$this->sendJson(['error' => 'An error occurred while processing the search results.']);
+            $this->sendJson(['error' => 'An error occurred while processing the search results.']);
         } catch (DownloadException $e) {
-            $this->log($e, ILogger::WARNING);
+            $this->log($e, LogLevel::WARNING);
             $response->setCode(IResponse::S502_BadGateway);
             $this->sendJson(['error' => 'An error occurred while downloading the search results, please try again later.']);
         }
         $fileName = str_replace(['@query@','@date@','@time@'], [$values->q,date('Y-m-d'),date('H:i:s')], $this->fileName);
-        $fileName = Strings::webalize($fileName);
-        if (method_exists($response, 'sendAsFile')) {
+        if($this->webalizeName) {
+            $fileName = Strings::webalize($fileName);
+        }
+        if ($response instanceof Nette\Http\Response) {
             $response->sendAsFile($fileName);
         }
         $this->sendJson($result);
     }
 
-    public function beforeRender()
-    {
-        parent::beforeRender();
-        $this->getSession()->start();
-    }
 }

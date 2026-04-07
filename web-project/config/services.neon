@@ -6,7 +6,7 @@ services:
 	- Http\Discovery\Psr17Factory
 	- App\Libs\Translator
 	- App\Libs\Downloader(userAgent: "%applicationName% %version%")
-	- App\Presentation\Home\HomePresenter(fileName: "%applicationName% search result @query@ @date@ @time@")
+	- App\Presentation\Home\HomePresenter(fileName: "%applicationName% search result @query@ @date@ @time@", webalizeName: false)
 
 
 

@@ -7,10 +7,10 @@ namespace App;
 use Nette;
 use Nette\Bootstrap\Configurator;
 
-class Bootstrap
+readonly class Bootstrap
 {
-    private readonly Configurator $configurator;
-    private readonly string $rootDir;
+    private Configurator $configurator;
+    private string $rootDir;
 
 
     public function __construct()
@@ -18,7 +18,7 @@ class Bootstrap
         $this->rootDir = dirname(__DIR__);
         $this->configurator = new Configurator();
         $this->configurator->setTempDirectory($this->rootDir . '/temp');
-        $this->configurator->setDebugMode(true);
+        $this->configurator->setDebugMode([]);
     }
 
 
