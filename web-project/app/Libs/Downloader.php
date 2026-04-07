@@ -38,13 +38,13 @@ class Downloader
     public function download(string|array $url, array $formParams = [], array $headers = [], string $method = 'GET'): string
     {
         if (is_array($url)) {
-            $url = $this->unparse_url($url);
+            $url = $this->unparseUrl($url);
         }
         if(count($formParams) && $method==='GET') {
-            $url = parse_url($url);
+            $url = $this->parseUrl($url);
             parse_str($url['query'] ?? '', $existingQuery);
             $url['query'] = http_build_query(array_merge($formParams, $existingQuery));
-            $url = $this->unparse_url($url);
+            $url = $this->unparseUrl($url);
         }
         $defaultHeaders = [
             'User-Agent' => $this->userAgent,
@@ -61,7 +61,7 @@ class Downloader
      * @param UrlArray $parsed_url
      * @return string
      */
-    public function unparse_url(array $parsed_url): string
+    public function unparseUrl(array $parsed_url): string
     {
         $scheme   = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
         $host     = $parsed_url['host'] ?? '';
@@ -76,6 +76,22 @@ class Downloader
     }
 
     /**
+     * @param string|UrlArray $url
+     * @return UrlArray
+     */
+    protected function parseUrl(string|array $url): array
+    {
+        if (is_array($url)) {
+            return $url;
+        }
+        $parsedUrl = parse_url($url);
+        if (!is_array($parsedUrl)) { //if parse_url returns false
+            throw new \InvalidArgumentException('Invalid URL');
+        }
+        return $parsedUrl;
+    }
+
+    /**
      * @param string $url
      * @param array<string, mixed> $formParams
      * @param array<string, mixed> $headers
@@ -84,7 +100,6 @@ class Downloader
      */
     protected function downloadNoCache(string $url, array $formParams, array $headers, string $method): string
     {
-        bdump(func_get_args());
         $request = $this->Psr17Factory->createRequest($method, $url, [
             'headers' => $headers,
             'form_params' => $formParams,

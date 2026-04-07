@@ -20,12 +20,12 @@ abstract class BasePresenter extends Presenter
 
     protected function log(mixed $message, ?string $level=null): void
     {
-        $this->Logger->log($level, $message);
+        $this->Logger->log($level, var_export($message,true));
     }
 
     public function beforeRender(): void {
         parent::beforeRender();
-        $this->template->setTranslator($this->Translator);
+        $this->getTemplate()->setTranslator($this->Translator); /** @phpstan-ignore method.notFound (this is a template, not a stdClass) */
     }
 
 }

@@ -33,7 +33,7 @@ final class HomePresenter extends BasePresenter
         $form->addText('q', 'search query');
         $form->addSubmit('send', 'search');
         $form->onSuccess[] = [$this, 'formSucceeded']; /** @phpstan-ignore assign.propertyType (nette magic) */
-        $form->onSuccess[] = fn() => $this->redirect('this'); /** @phpstan-ignore assign.propertyType (nette magic) */
+        $form->onSuccess[] = fn() => $this->redirect('this');
         return $form;
     }
 
