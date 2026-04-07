@@ -40,7 +40,7 @@ class Downloader
         if (is_array($url)) {
             $url = $this->unparseUrl($url);
         }
-        if(count($formParams) && $method==='GET') {
+        if (count($formParams) && $method === 'GET') {
             $url = $this->parseUrl($url);
             parse_str($url['query'] ?? '', $existingQuery);
             $url['query'] = http_build_query(array_merge($formParams, $existingQuery));

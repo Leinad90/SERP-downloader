@@ -11,19 +11,19 @@ use Psr\Log\LoggerInterface;
 
 abstract class BasePresenter extends Presenter
 {
-
     #[Inject]
     public Translator $Translator;
 
     #[Inject]
     public LoggerInterface $Logger;
 
-    protected function log(mixed $message, ?string $level=null): void
+    protected function log(mixed $message, ?string $level = null): void
     {
-        $this->Logger->log($level, var_export($message,true));
+        $this->Logger->log($level, var_export($message, true));
     }
 
-    public function beforeRender(): void {
+    public function beforeRender(): void
+    {
         parent::beforeRender();
         $this->getTemplate()->setTranslator($this->Translator); /** @phpstan-ignore method.notFound (this is a template, not a stdClass) */
     }

@@ -53,7 +53,7 @@ final class HomePresenter extends BasePresenter
             $this->sendJson(['error' => 'An error occurred while downloading the search results, please try again later.']);
         }
         $fileName = str_replace(['@query@','@date@','@time@'], [$values->q,date('Y-m-d'),date('H:i:s')], $this->fileName);
-        if($this->webalizeName) {
+        if ($this->webalizeName) {
             $fileName = Strings::webalize($fileName);
         }
         if ($response instanceof Nette\Http\Response) {

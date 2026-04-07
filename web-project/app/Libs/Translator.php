@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Libs;
 
 use Nette\HtmlStringable;
 
 class Translator implements \Nette\Localization\Translator
 {
-
     /**
      * @inheritDoc
      */
