@@ -46,11 +46,11 @@ final class HomePresenter extends BasePresenter
         } catch (ProcessSerpException $e) {
             $this->log($e, LogLevel::ERROR);
             $response->setCode(IResponse::S500_InternalServerError);
-            $this->sendJson(['error' => 'An error occurred while processing the search results.']);
+            $this->sendJson(['error' => 'An error occurred while processing the search results.', 'status' => 'error']);
         } catch (DownloadException $e) {
             $this->log($e, LogLevel::WARNING);
             $response->setCode(IResponse::S502_BadGateway);
-            $this->sendJson(['error' => 'An error occurred while downloading the search results, please try again later.']);
+            $this->sendJson(['error' => 'An error occurred while downloading the search results, please try again later.','status' => 'error']);
         }
         $fileName = str_replace(['@query@','@date@','@time@'], [$values->q,date('Y-m-d'),date('H:i:s')], $this->fileName);
         if ($this->webalizeName) {
@@ -59,7 +59,7 @@ final class HomePresenter extends BasePresenter
         if ($response instanceof Nette\Http\Response) {
             $response->sendAsFile($fileName);
         }
-        $this->sendJson($result);
+        $this->sendJson(['data'=> $result, 'status' => 'success']);
     }
 
     public function beforeRender(): void
