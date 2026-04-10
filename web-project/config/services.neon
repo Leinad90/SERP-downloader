@@ -5,6 +5,7 @@ services:
 	- GuzzleHttp\Client
 	- Http\Discovery\Psr17Factory
 	- App\Libs\Translator
+	- Tracy\Bridges\Psr\TracyToPsrLoggerAdapter
 	- App\Libs\Downloader(userAgent: "%applicationName% %version%")
 	- App\Presentation\Home\HomePresenter(fileName: "%applicationName% search result @query@ @date@ @time@", webalizeName: false)
 

@@ -62,4 +62,10 @@ final class HomePresenter extends BasePresenter
         $this->sendJson($result);
     }
 
+    public function beforeRender(): void
+    {
+        parent::beforeRender();
+        $this->getSession()->start();
+    }
+
 }

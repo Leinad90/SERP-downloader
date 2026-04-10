@@ -62,4 +62,4 @@ class GoogleTest extends Tester\TestCase
     }
 }
 
-(new GoogleTest())->run();
+new GoogleTest()->run();

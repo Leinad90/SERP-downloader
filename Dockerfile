@@ -11,9 +11,6 @@ WORKDIR /var/www/html
 
 # Vytvoření uživatele a nastavení oprávnění
 RUN useradd -G www-data,root -u 1000 -m composeruser
-# Změna vlastníka pracovního adresáře
-RUN chown -R composeruser:www-data /var/www/html/
-
 
 # Otevření portu
 EXPOSE 80
