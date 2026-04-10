@@ -37,15 +37,12 @@ class Downloader
      */
     public function download(string|array $url, array $formParams = [], array $headers = [], string $method = 'GET'): string
     {
-        if (is_array($url)) {
-            $url = $this->unparseUrl($url);
-        }
         if (count($formParams) && $method === 'GET') {
             $url = $this->parseUrl($url);
             parse_str($url['query'] ?? '', $existingQuery);
             $url['query'] = http_build_query(array_merge($formParams, $existingQuery));
-            $url = $this->unparseUrl($url);
         }
+        $url = $this->unparseUrl($url);
         $defaultHeaders = [
             'User-Agent' => $this->userAgent,
         ];
@@ -58,11 +55,14 @@ class Downloader
 
     /**
      * @source https://www.php.net/manual/en/function.parse-url.php#106731
-     * @param UrlArray $parsed_url
+     * @param UrlArray|string $parsed_url
      * @return string
      */
-    public function unparseUrl(array $parsed_url): string
+    public function unparseUrl(array|string $parsed_url): string
     {
+        if (is_string($parsed_url)) {
+            return $parsed_url;
+        }
         $scheme   = isset($parsed_url['scheme']) ? $parsed_url['scheme'] . '://' : '';
         $host     = $parsed_url['host'] ?? '';
         $port     = isset($parsed_url['port']) ? ':' . $parsed_url['port'] : '';
