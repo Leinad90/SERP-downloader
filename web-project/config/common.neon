@@ -27,7 +27,7 @@ assets:
 	mapping:
 		default:
 			path: assets
-			# type: vite  # Uncomment to activate Vite for asset building
+			type: vite  # Uncomment to activate Vite for asset building
 
 
 di:

@@ -8,4 +8,9 @@ services:
       - ./web-project/:/var/www/html/
     ports:
       - "8080:80"
-    entrypoint: ["sh", "-c", "chown -R composeruser:www-data /var/www/html/; chmod -R 770 /var/www/html/temp/cache; sudo -u composeruser composer install --optimize-autoloader -n; apache2-foreground"]
+    entrypoint: ["sh", "-c",
+        "chown -R composeruser:www-data /var/www/html/;
+        chmod -R 770 /var/www/html/temp/cache;
+        sudo -u composeruser composer install --optimize-autoloader -n;
+        npm install; 
+		npm run build; apache2-foreground"]

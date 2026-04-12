@@ -31,7 +31,7 @@ final class HomePresenter extends BasePresenter
         $form->addProtection();
         $form->setTranslator($this->Translator);
         $form->addText('q', 'search query');
-        $form->addSubmit('send', 'search');
+        $form->addSubmit('send', 'download');
         $form->onSuccess[] = [$this, 'formSucceeded']; /** @phpstan-ignore assign.propertyType (nette magic) */
         $form->onSuccess[] = fn() => $this->redirect('this');
         return $form;
@@ -59,7 +59,7 @@ final class HomePresenter extends BasePresenter
         if ($response instanceof Nette\Http\Response) {
             $response->sendAsFile($fileName);
         }
-        $this->sendJson(['data'=> $result, 'status' => 'success']);
+        $this->sendJson(['data' => $result, 'status' => 'success']);
     }
 
     public function beforeRender(): void
